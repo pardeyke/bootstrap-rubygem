@@ -2,6 +2,8 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 
+# Fix for Ruby 3.0+ compatibility: ensure Logger is available before ActiveSupport
+require 'logger'
 require 'active_support/core_ext/kernel/reporting'
 
 Dir['test/support/**/*.rb'].each do |file|
