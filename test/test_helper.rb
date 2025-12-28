@@ -1,3 +1,5 @@
+require 'logger'
+
 require 'minitest/autorun'
 require 'minitest/reporters'
 Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
@@ -26,7 +28,7 @@ Capybara.register_driver :cuprite do |app|
   options = {
       window_size: [1280, 1024],
       timeout: 30,
-      process_timeout: 30
+      process_timeout: 60
   }
   options[:browser_path] = browser_path if browser_path
   Capybara::Cuprite::Driver.new(app, options)
@@ -34,9 +36,9 @@ end
 
 Capybara.configure do |config|
   config.server = :webrick
-  config.app_host = 'http://localhost:7000'
+  config.app_host = 'http://localhost:8000'
   config.default_driver = :cuprite
   config.javascript_driver = :cuprite
-  config.server_port = 7000
+  config.server_port = 8000
   config.default_max_wait_time = 10
 end
