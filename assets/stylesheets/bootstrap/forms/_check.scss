@@ -1,0 +1,101 @@
+@use "../functions" as *;
+@use "../mixins/focus-ring" as *;
+@use "../mixins/tokens" as *;
+
+// stylelint-disable custom-property-no-missing-var-function
+$check-tokens: () !default;
+
+// scss-docs-start check-tokens
+// stylelint-disable-next-line scss/dollar-variable-default
+$check-tokens: defaults(
+  (
+    --check-size: 1.25rem,
+    --check-margin-block: .125rem,
+    --check-bg: var(--bg-body),
+    --check-border-color: var(--border-color),
+    --check-border-radius: .375rem,
+    --check-checked-bg: var(--control-checked-bg),
+    --check-checked-border-color: var(--control-checked-border-color),
+    --check-indeterminate-bg: var(--control-checked-bg),
+    --check-indeterminate-border-color: var(--control-checked-border-color),
+    --check-active-bg: var(--control-active-bg),
+    --check-active-border-color: var(--control-active-border-color),
+    --check-disabled-bg: var(--control-disabled-bg),
+    --check-disabled-opacity: var(--control-disabled-opacity),
+  ),
+  $check-tokens
+);
+// scss-docs-end check-tokens
+// stylelint-enable custom-property-no-missing-var-function
+
+@layer forms {
+  .check {
+    @include tokens($check-tokens);
+
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    margin-block: var(--check-margin-block);
+
+    :where(svg, input) {
+      flex-shrink: 0;
+      grid-row-start: 1;
+      grid-column-start: 1;
+      width: var(--check-size);
+      height: var(--check-size);
+    }
+
+    :where(input) {
+      appearance: none;
+      // later: maybe set a tertiary bg color?
+      background-color: var(--theme-bg, var(--check-bg));
+      border: 1px solid var(--theme-bg, var(--check-border-color));
+      // stylelint-disable-next-line property-disallowed-list
+      border-radius: .3em;
+    }
+
+    :where(input:checked, input:indeterminate) {
+      background-color: var(--theme-bg, var(--check-checked-bg));
+      border-color: var(--theme-bg, var(--check-checked-border-color));
+    }
+
+    :where(input:focus-visible) {
+      @include focus-ring(true);
+      --focus-ring-offset: -1px;
+    }
+
+    &:has(input:checked) .checked,
+    &:has(input:indeterminate) .indeterminate {
+      display: block;
+      color: var(--theme-contrast, var(--primary-contrast));
+      stroke: currentcolor;
+    }
+
+    &:has(input:disabled) {
+      --check-bg: var(--check-disabled-bg);
+
+      ~ label {
+        color: var(--fg-3);
+        cursor: default;
+      }
+    }
+    &:has(input:disabled:checked) {
+      opacity: var(--check-disabled-opacity);
+    }
+
+    :where(svg) {
+      pointer-events: none;
+    }
+
+    :where(svg path) {
+      display: none;
+    }
+  }
+
+  .check-sm {
+    --check-size: 1rem;
+  }
+  .check-lg {
+    --check-size: 1.5rem;
+    --check-margin-block: 0;
+  }
+}

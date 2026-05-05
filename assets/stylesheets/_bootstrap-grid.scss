@@ -1,40 +1,39 @@
-@import "bootstrap/mixins/banner";
-@include bsBanner(Grid);
+@use "bootstrap/banner" with (
+  $file: "bootstrap/Grid"
+);
 
-$include-column-box-sizing: true !default;
+@use "bootstrap/config" as *;
+@use "bootstrap/functions" as *;
 
-@import "bootstrap/functions";
-@import "bootstrap/variables";
-@import "bootstrap/variables-dark";
-@import "bootstrap/maps";
+@forward "bootstrap/utilities"; // Make utilities available downstream
+@use "bootstrap/utilities" as *; // Bring utilities into the current namespace
 
-@import "bootstrap/mixins/breakpoints";
-@import "bootstrap/mixins/container";
-@import "bootstrap/mixins/grid";
-@import "bootstrap/mixins/utilities";
+@forward "bootstrap/layout/containers";
+@forward "bootstrap/layout/grid";
 
-@import "bootstrap/vendor/rfs";
-
-@import "bootstrap/containers";
-@import "bootstrap/grid";
-
-@import "bootstrap/utilities";
-// Only use the utilities we need
 // stylelint-disable-next-line scss/dollar-variable-default
 $utilities: map-get-multiple(
   $utilities,
   (
     "bootstrap/display",
     "bootstrap/order",
+    "bootstrap/grid-column-counts",
+    "bootstrap/grid-columns",
+    "bootstrap/grid-auto-flow",
+    "bootstrap/gap",
+    "bootstrap/row-gap",
+    "bootstrap/column-gap",
     "bootstrap/flex",
     "bootstrap/flex-direction",
     "bootstrap/flex-grow",
     "bootstrap/flex-shrink",
     "bootstrap/flex-wrap",
     "bootstrap/justify-content",
+    "bootstrap/justify-items",
     "bootstrap/align-items",
     "bootstrap/align-content",
     "bootstrap/align-self",
+    "bootstrap/place-items",
     "bootstrap/margin",
     "bootstrap/margin-x",
     "bootstrap/margin-y",
@@ -59,4 +58,11 @@ $utilities: map-get-multiple(
   )
 );
 
-@import "bootstrap/utilities/api";
+// check-unused-imports-disable-next-line — side-effect import: generates utility CSS.
+@use "bootstrap/utilities/api";
+
+:root {
+  @each $name, $value in $breakpoints {
+    --breakpoint-#{$name}: #{$value};
+  }
+}

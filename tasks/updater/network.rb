@@ -80,7 +80,8 @@ class Updater
         if @branch =~ /\A[0-9a-f]{40,}\z/
           @branch
         else
-          cmd = "git ls-remote #{Shellwords.escape "https://github.com/#@repo"} #@branch"
+          ref = "refs/heads/#@branch"
+          cmd = "git ls-remote #{Shellwords.escape "https://github.com/#@repo"} #{Shellwords.escape ref}"
           log cmd
           result = %x[#{cmd}]
           raise 'Could not get branch sha!' unless $?.success? && !result.empty?

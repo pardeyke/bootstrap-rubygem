@@ -50,9 +50,10 @@ class Updater
         imports = Deps.new
         # Get the imports from the ES6 files to order requires correctly.
         read_files('js/src', src_files).each do |name, content|
-          file_imports = content.scan(%r{import *(?:[a-zA-Z]*|\{[a-zA-Z ,]*\}) *from '([\w/.-]+)}).flatten(1).map do |f|
-            Pathname.new(name).dirname.join(f).cleanpath.to_s
-          end.uniq
+          file_imports = content.scan(%r{import *(?:[a-zA-Z]*|\{[a-zA-Z ,]*\}) *from '([\w/.-]+)}).flatten(1)
+            .select { |f| f.start_with?('./', '../') }
+            .map { |f| Pathname.new(name).dirname.join(f).cleanpath.to_s }
+            .uniq
           imports.add name, *(file_imports - INLINED_SRCS)
         end
         imports.tsort
