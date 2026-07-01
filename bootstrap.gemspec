@@ -12,9 +12,12 @@ Gem::Specification.new do |s|
   s.license  = 'MIT'
 
   # SassC requires Ruby 2.3.3. Also specify here to make it obvious.
+  # (Bootstrap 6 stylesheets require a Dart Sass engine to compile, but the gem
+  # itself stays installable on the same Ruby range as before.)
   s.required_ruby_version = '>= 2.3.3'
 
-  s.add_runtime_dependency 'popper_js', '>= 2.11.8', '< 3'
+  # Bootstrap 6 uses @floating-ui/dom (vendored in assets/javascripts) instead
+  # of Popper, so there is no longer a popper_js runtime dependency.
 
   s.add_development_dependency 'rake'
 
@@ -22,9 +25,10 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'minitest', '>= 5.14.4', '< 7'
   s.add_development_dependency 'minitest-reporters', '~> 1.4.3'
   s.add_development_dependency 'term-ansicolor'
-  # Integration testing
+  # Integration testing (headless browser)
   s.add_development_dependency 'capybara', '>= 2.6.0'
   s.add_development_dependency 'cuprite'
+  s.add_development_dependency 'webrick'
   # Dummy Rails app dependencies
   s.add_development_dependency 'railties'
   s.add_development_dependency 'actionpack', '>= 4.1.5'
