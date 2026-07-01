@@ -41,7 +41,8 @@ jobs:
         run: |
           bundle exec rake update"[$UPSTREAM_BRANCH]"
           bundle exec rake sync_version"[$UPSTREAM_BRANCH]"
-          if [ -n "$(git status --porcelain)" ]; then
+          # Only consider the update's own outputs, never stray CI artifacts.
+          if [ -n "$(git status --porcelain -- assets lib/bootstrap/version.rb)" ]; then
             echo "changed=true" >> "$GITHUB_OUTPUT"
           else
             echo "changed=false" >> "$GITHUB_OUTPUT"
@@ -58,6 +59,6 @@ jobs:
           sha=$(grep -oE "[0-9a-f]{40}" lib/bootstrap/version.rb | head -1)
           git config user.name  'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -A
+          git add -A -- assets lib/bootstrap/version.rb
           git commit -m "Auto-update Bootstrap from twbs/bootstrap@${UPSTREAM_BRANCH} (${sha})"
           git push
