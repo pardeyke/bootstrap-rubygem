@@ -84,6 +84,16 @@ task :update_scss, :branch do |t, args|
   Updater.new(branch: args[:branch], skip_js: true).update_bootstrap
 end
 
+desc 'Sync the gem VERSION to the upstream Bootstrap package.json version'
+task :sync_version, :branch do |t, args|
+  require './tasks/updater'
+  # npm prerelease versions (e.g. 6.0.0-alpha1) map to RubyGems (6.0.0.alpha1).
+  gem_version = Updater.new(branch: args[:branch]).upstream_version.sub('-', '.')
+  path = 'lib/bootstrap/version.rb'
+  File.write(path, File.read(path).sub(/VERSION\s*=\s*'[^']*'/, "VERSION       = '#{gem_version}'"))
+  $stderr.puts "VERSION set to #{gem_version}"
+end
+
 desc 'Start a dummy Rails app server'
 task :rails_server do
   require 'rack'
