@@ -14,10 +14,11 @@ First pre-release tracking Bootstrap 6 (upstream [`v6-dev`](https://github.com/t
   Import Bootstrap with `@use "bootstrap"` and customize variables via
   `@use "bootstrap" with (...)`. See the [v5→v6 migration guide](https://github.com/twbs/bootstrap/blob/v6-dev/skills/bootstrap-v5-v6-migration/SKILL.md).
 * **Dart Sass is required to compile the stylesheets.** LibSass/SassC
-  (`sassc-rails`) cannot compile the module system. `sassc-rails` remains a
-  supported Sass engine option for the gem, but Bootstrap 6's own stylesheets
-  will only compile under `dartsass-sprockets`, `dartsass-rails`, or
-  `cssbundling-rails`.
+  (`sassc-rails`) cannot compile the module system, so `sassc-rails` is no
+  longer a supported Sass engine. Use `dartsass-sprockets` (a drop-in
+  replacement), `dartsass-rails`, or `cssbundling-rails`. The minimum Ruby
+  version is now 2.6 (compiling the stylesheets with a Ruby-side engine
+  requires a recent Dart Sass, i.e. Ruby 3.1+).
 * The standalone `bootstrap-grid`, `bootstrap-reboot`, and `bootstrap-utilities`
   Sass entry points were removed upstream; only `bootstrap` remains.
 * **JavaScript is now ES-module only.** Bootstrap 6 removed the UMD bundle and

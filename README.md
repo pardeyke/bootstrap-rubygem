@@ -8,8 +8,9 @@ For Sass versions of Bootstrap 3 and 2 see [bootstrap-sass](https://github.com/t
 > [`v6-dev`](https://github.com/twbs/bootstrap/tree/v6-dev) branch.
 > Bootstrap 6 moved its Sass to the [module system](https://sass-lang.com/documentation/at-rules/use)
 > (`@use`/`@forward`), so its stylesheets require a **Dart Sass** engine to
-> compile — LibSass/SassC (`sassc-rails`) cannot compile them. Its JavaScript is
-> ES-module only and is loaded via importmaps. See the [CHANGELOG](CHANGELOG.md).
+> compile — LibSass/SassC (`sassc-rails`) cannot compile them and is no longer
+> supported by this gem. Its JavaScript is ES-module only and is loaded via
+> importmaps. See the [CHANGELOG](CHANGELOG.md).
 > For the previous stable release, use `gem 'bootstrap', '~> 5.3.8'`.
 
 **Ruby on Rails Note**: Newer releases of Rails have added additional ways for
@@ -34,11 +35,11 @@ gem 'bootstrap', '~> 6.0.0.alpha1'
 
 This gem requires a Sass engine, so make sure you have **one** of these gems in your Gemfile.
 Bootstrap 6 stylesheets use the Sass module system, so a **Dart Sass** engine is
-required to compile them — `sassc-rails` (LibSass) can no longer compile Bootstrap:
-- [`dartsass-sprockets`](https://github.com/tablecheck/dartsass-sprockets): Dart Sass engine, recommended but only works for Ruby 2.6+ and Rails 5+
+required to compile them — `sassc-rails` (LibSass) cannot compile Bootstrap 6 and
+is no longer supported; migrate to one of:
+- [`dartsass-sprockets`](https://github.com/tablecheck/dartsass-sprockets): Dart Sass engine, recommended (a drop-in replacement for `sassc-rails`). Compiling Bootstrap 6 requires version 3.1+ and therefore Ruby 3.1+; older versions install on Ruby 2.6+ but bundle a Dart Sass too old for Bootstrap 6.
 - [`dartsass-rails`](https://github.com/rails/dartsass-rails): Dart Sass engine, recommended for Rails projects that use Propshaft
-- [`cssbundling-rails`](https://github.com/rails/cssbundling-rails): External Sass engine
-- [`sassc-rails`](https://github.com/sass/sassc-rails): SassC engine, deprecated and compatible with Ruby 2.3+ and Rails 4, but **cannot compile Bootstrap 6** stylesheets
+- [`cssbundling-rails`](https://github.com/rails/cssbundling-rails): External Sass engine, runs Dart Sass in Node so it works on any supported Ruby
 
 Also ensure that `sprockets-rails` is at least v2.3.2.
 

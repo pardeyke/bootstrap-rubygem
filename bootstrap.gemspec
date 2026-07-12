@@ -11,10 +11,10 @@ Gem::Specification.new do |s|
   s.homepage = 'https://github.com/twbs/bootstrap-rubygem'
   s.license  = 'MIT'
 
-  # SassC requires Ruby 2.3.3. Also specify here to make it obvious.
-  # (Bootstrap 6 stylesheets require a Dart Sass engine to compile, but the gem
-  # itself stays installable on the same Ruby range as before.)
-  s.required_ruby_version = '>= 2.3.3'
+  # Bootstrap 6 requires a Dart Sass engine; dartsass-sprockets needs Ruby 2.6+.
+  # Compiling the v6 stylesheets needs a recent Dart Sass (dartsass-sprockets
+  # >= 3.1, i.e. Ruby 3.1+) or cssbundling-rails (Sass runs in Node).
+  s.required_ruby_version = '>= 2.6'
 
   # Bootstrap 6 uses @floating-ui/dom (vendored in assets/javascripts) instead
   # of Popper, so there is no longer a popper_js runtime dependency.

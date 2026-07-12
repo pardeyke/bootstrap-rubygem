@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 # Bootstrap 6's stylesheets use the Sass module system (@use) and the CSS
-# if()/sass() syntax, which only a recent Dart Sass can compile. libsass (the
-# sassc gem) and the older Dart Sass releases that still resolve on Ruby < 3.1
-# fail to parse them, so the stylesheet tests skip on those engines. The probe
-# compiles a snippet of the same syntax rather than Bootstrap itself, so a
-# genuine Bootstrap regression on a capable engine still fails the tests.
+# if()/sass() syntax, which only a recent Dart Sass can compile. The older
+# Dart Sass releases that still resolve on Ruby < 3.1 fail to parse them, so
+# the stylesheet tests skip on those engines. The probe compiles a snippet of
+# the same syntax rather than Bootstrap itself, so a genuine Bootstrap
+# regression on a capable engine still fails the tests.
 module SassEngineSupport
   BOOTSTRAP6_SYNTAX_PROBE = <<~SCSS
     @use "sass:math";
