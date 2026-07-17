@@ -27,7 +27,7 @@ $dialog-tokens: defaults(
     --dialog-border-color: var(--border-color-translucent),
     --dialog-border-width: var(--border-width),
     --dialog-border-radius: var(--radius-7),
-    --dialog-box-shadow: var(--box-shadow-lg),
+    --dialog-box-shadow: var(--box-shadow-xl),
     --dialog-transition-duration: .3s,
     --dialog-transition-timing: cubic-bezier(.22, 1, .36, 1),
     --dialog-backdrop-bg: light-dark(rgb(0 0 0 / 50%), rgb(0 0 0 / 65%)),
@@ -185,7 +185,7 @@ $dialog-sizes: defaults(
       position: fixed;
       inset-block-start: 50%;
       inset-inline-start: 50%;
-      z-index: $zindex-dialog;
+      z-index: var(--z-dialog);
       margin-inline: 0;
       transform: translate(-50%, -50%);
     }

@@ -11,7 +11,7 @@ $menu-tokens: () !default;
 // scss-docs-start menu-tokens
 $menu-tokens: defaults(
   (
-    --menu-zindex: #{$zindex-menu},
+    --menu-zindex: var(--z-menu),
     --menu-gap: .125rem,
     --menu-min-width: 10rem,
     --menu-padding-x: .25rem,
@@ -23,7 +23,7 @@ $menu-tokens: defaults(
     // --menu-border-color: var(--border-color-translucent),
     // --menu-border-radius: var(--radius-7),
     // --menu-border-width: var(--border-width),
-    --menu-box-shadow: var(--box-shadow),
+    --menu-box-shadow: var(--box-shadow-lg),
     // --menu-max-height: none,
     --menu-divider-bg: var(--border-color-translucent),
     --menu-divider-margin-y: .125rem,
@@ -180,7 +180,7 @@ $menu-tokens: defaults(
     }
 
     &.selected {
-      font-weight: $font-weight-semibold;
+      font-weight: var(--font-weight-semibold);
     }
 
     &.disabled,

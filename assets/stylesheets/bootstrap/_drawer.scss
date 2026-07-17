@@ -16,7 +16,7 @@ $drawer-tokens: () !default;
 $drawer-tokens: defaults(
   (
     --drawer-inset: var(--spacer),
-    --drawer-zindex: #{$zindex-drawer},
+    --drawer-zindex: var(--z-drawer),
     --drawer-width: 400px,
     --drawer-height: 30vh,
     --drawer-padding-x: var(--spacer),
@@ -26,7 +26,7 @@ $drawer-tokens: defaults(
     --drawer-border-width: var(--border-width),
     --drawer-border-color: var(--border-color-translucent),
     --drawer-border-radius: var(--radius-7),
-    --drawer-box-shadow: var(--box-shadow-lg),
+    --drawer-box-shadow: var(--box-shadow-xl),
     --drawer-transition-duration: .3s,
     --drawer-transition-timing: cubic-bezier(.22, 1, .36, 1),
     --drawer-title-line-height: 1.5,
