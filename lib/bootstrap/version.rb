@@ -2,5 +2,5 @@
 
 module Bootstrap
   VERSION       = '6.0.0.alpha1'
-  BOOTSTRAP_SHA = 'b5a89d61518df17bebce4b95bac78935b4692d60'
+  BOOTSTRAP_SHA = '0d5f092a940c104472267becd8cf0afff62f8268'
 end
