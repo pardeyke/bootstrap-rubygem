@@ -1,0 +1,7 @@
+// Bootstrap Icons for Sprockets: resolves the icon fonts through the asset pipeline.
+// Import this instead of "bootstrap-icons" when using Sprockets:
+//
+//     @import "bootstrap-icons-sprockets";
+$bootstrap-icons-font-src: font-url("bootstrap-icons.woff2") format("woff2"), font-url("bootstrap-icons.woff") format("woff") !default;
+
+@import "bootstrap-icons";

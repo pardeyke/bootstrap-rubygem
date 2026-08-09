@@ -1,0 +1,12 @@
+// Bootstrap Icons for Propshaft: resolves the icon fonts through the asset pipeline.
+// Import this instead of "bootstrap-icons" when using Propshaft (e.g. with dartsass-rails):
+//
+//     @import "bootstrap-icons-propshaft";
+//
+// The root-relative URLs are logical asset paths that Propshaft rewrites to digested
+// paths. Upstream's "?hash" cache-buster is dropped: Propshaft already fingerprints
+// the filename, and the query string would make the CSS font URL differ from
+// preload_link_tag's URL, causing browsers to download the font twice.
+$bootstrap-icons-font-src: url("/bootstrap-icons.woff2") format("woff2"), url("/bootstrap-icons.woff") format("woff") !default;
+
+@import "bootstrap-icons";

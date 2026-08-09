@@ -40,7 +40,10 @@ class Updater
     puts " twbs cache: #{@cache_path}"
     puts '-' * 60
 
-    FileUtils.rm_rf('assets')
+    # Remove only Bootstrap-managed assets, keeping Bootstrap Icons files (updated via `rake update_icons`).
+    FileUtils.rm_rf('assets/javascripts')
+    FileUtils.rm_rf('assets/stylesheets/bootstrap')
+    FileUtils.rm_rf(Dir.glob('assets/stylesheets/_bootstrap{,-grid,-reboot,-utilities}.scss'))
     @save_to.each { |_, v| FileUtils.mkdir_p(v) }
 
     update_scss_assets

@@ -105,6 +105,38 @@ the concatenated `bootstrap` for faster compilation:
 //= require bootstrap
 ```
 
+#### Bootstrap Icons
+
+The gem also bundles [Bootstrap Icons](https://icons.getbootstrap.com/) (Sass and the icon web fonts),
+so icons can be served from your own app through the asset pipeline instead of a CDN.
+Their use is entirely optional — nothing is included unless you import them.
+
+With Sprockets (`dartsass-sprockets` or `sassc-rails`), import the Sprockets variant,
+which resolves the fonts through the asset pipeline:
+
+```scss
+@import "bootstrap-icons-sprockets";
+```
+
+With Propshaft (`dartsass-rails`), import the Propshaft variant, which emits
+root-relative font URLs that Propshaft rewrites to the digested paths
+(without upstream's `?hash` query string, so the URLs also match
+`preload_link_tag "bootstrap-icons.woff2"` if you preload the font):
+
+```scss
+@import "bootstrap-icons-propshaft";
+```
+
+Otherwise, import `bootstrap-icons` and override
+[`$bootstrap-icons-font-dir` or `$bootstrap-icons-font-src`](assets/stylesheets/_bootstrap-icons.scss)
+to wherever the fonts (in [assets/fonts](assets/fonts)) are served from.
+
+Then use icons as usual:
+
+```html
+<i class="bi bi-alarm"></i>
+```
+
 ### b. Other Ruby frameworks
 
 If your framework uses Sprockets or Hanami,
