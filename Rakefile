@@ -94,6 +94,12 @@ task :sync_version, :branch do |t, args|
   $stderr.puts "VERSION set to #{gem_version}"
 end
 
+desc 'Update Bootstrap Icons from the bootstrap-icons npm package'
+task :update_icons, :version do |t, args|
+  require './tasks/updater/icons'
+  IconsUpdater.new(version: args[:version]).update_icons
+end
+
 desc 'Start a dummy Rails app server'
 task :rails_server do
   require 'rack'

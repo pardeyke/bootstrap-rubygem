@@ -6,6 +6,13 @@ The changelog only includes changes specific to the RubyGem.
 The Bootstrap framework changes can be found in [the Releases section of twbs/bootstrap](https://github.com/twbs/bootstrap/releases).
 Release announcement posts on [the official Bootstrap blog](http://blog.getbootstrap.com) contain summaries of the most noteworthy changes made in each release of Bootstrap.
 
+# Unreleased
+
+* Bundle [Bootstrap Icons](https://icons.getbootstrap.com/) v1.13.1 (Sass + web fonts), opt-in via
+  `@use "bootstrap-icons-sprockets"` (Sprockets), `@use "bootstrap-icons-propshaft"`
+  (Propshaft), or `@use "bootstrap-icons"`.
+  [#276](https://github.com/twbs/bootstrap-rubygem/issues/276)
+
 # 6.0.0.alpha1
 
 First pre-release tracking Bootstrap 6 (upstream [`v6-dev`](https://github.com/twbs/bootstrap/tree/v6-dev)). **This is an alpha; expect breaking changes.**

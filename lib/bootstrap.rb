@@ -37,6 +37,10 @@ module Bootstrap
       File.join assets_path, 'javascripts'
     end
 
+    def fonts_path
+      File.join assets_path, 'fonts'
+    end
+
     def assets_path
       @assets_path ||= File.join gem_path, 'assets'
     end
@@ -63,6 +67,7 @@ module Bootstrap
     def register_sprockets
       Sprockets.append_path(stylesheets_path)
       Sprockets.append_path(javascripts_path)
+      Sprockets.append_path(fonts_path)
     end
 
     def register_hanami

@@ -50,7 +50,10 @@ class Updater
       FileUtils.mkdir_p(@save_to[:scss])
       update_scss_assets
     else
-      FileUtils.rm_rf('assets')
+      # Remove only Bootstrap-managed assets, keeping Bootstrap Icons files (updated via `rake update_icons`).
+      FileUtils.rm_rf('assets/javascripts')
+      FileUtils.rm_rf('assets/stylesheets/bootstrap')
+      FileUtils.rm_f('assets/stylesheets/_bootstrap.scss')
       @save_to.each { |_, v| FileUtils.mkdir_p(v) }
       update_scss_assets
       update_javascript_assets

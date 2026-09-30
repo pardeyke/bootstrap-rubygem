@@ -78,6 +78,42 @@ Then, remove all the `*= require` and `*= require_tree` statements from the Sass
 
 Do not use `*= require` in Sass or your other stylesheets will not be able to access the Bootstrap mixins and variables.
 
+### Bootstrap Icons
+
+The gem also bundles [Bootstrap Icons](https://icons.getbootstrap.com/) (Sass and the icon web fonts),
+so icons can be served from your own app through the asset pipeline instead of a CDN.
+Their use is entirely optional — nothing is included unless you import them.
+
+With Sprockets (`dartsass-sprockets`), use the Sprockets variant,
+which resolves the fonts through the asset pipeline:
+
+```scss
+@use "bootstrap-icons-sprockets";
+```
+
+With Propshaft (`dartsass-rails`), use the Propshaft variant, which emits
+root-relative font URLs that Propshaft rewrites to the digested paths
+(without upstream's `?hash` query string, so the URLs also match
+`preload_link_tag "bootstrap-icons.woff2"` if you preload the font):
+
+```scss
+@use "bootstrap-icons-propshaft";
+```
+
+Otherwise, use `bootstrap-icons` and configure
+[`$bootstrap-icons-font-dir` or `$bootstrap-icons-font-src`](assets/stylesheets/_bootstrap-icons.scss)
+to point to wherever the fonts (in [assets/fonts](assets/fonts)) are served from:
+
+```scss
+@use "bootstrap-icons" with ($bootstrap-icons-font-dir: "/fonts");
+```
+
+Then use icons as usual:
+
+```html
+<i class="bi bi-alarm"></i>
+```
+
 ### JavaScript
 
 Bootstrap 6's JavaScript is **ES-module only** — there is no UMD bundle and no
