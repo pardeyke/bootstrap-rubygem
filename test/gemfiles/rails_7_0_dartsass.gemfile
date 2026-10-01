@@ -4,6 +4,8 @@ gem 'actionpack', '~> 7.0.4'
 gem 'activesupport', '~> 7.0.4'
 gem 'dartsass-sprockets', '~> 3.0'
 
+gem 'json', '< 3'
+
 gemspec path: '../../'
 
 # no longer bundled as default gems in newer ruby
