@@ -51,11 +51,5 @@ jobs:
       - name: Disable AppArmor # https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md
         if: runner.os == 'Linux'
         run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
-      # The first page Chrome opens on a fresh runner takes 10-50s (later ones
-      # take <1s, even in new browser processes), which exceeds Ferrum's 30s
-      # command timeout in the first browser test. Pay that cold start here.
-      - name: Warm up Chrome
-        run: |
-          bundle exec ruby -rferrum -e 'b = Ferrum::Browser.new(timeout: 120, process_timeout: 120); b.go_to("data:text/html,<p>warm</p>"); b.quit'
       - name: Build and test with Rake
         run: bundle exec rake --trace
