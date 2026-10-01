@@ -19,6 +19,16 @@ class PropshaftTest < ActionDispatch::IntegrationTest
     assert_includes Rails.application.importmap.to_json(resolver: helpers), helpers.asset_path('bootstrap.bundle.min.js')
   end
 
+  def test_icons_font_urls_are_digested_and_match_preload
+    get helpers.stylesheet_path('application')
+    %w(woff2 woff).each do |format|
+      font_path = helpers.asset_path("bootstrap-icons.#{format}")
+      assert_match %r{\A/assets/bootstrap-icons-\h+\.#{format}\z}, font_path
+      # Exactly the URL that preload_link_tag emits, with no ?hash query string.
+      assert_match %r{url\("?#{Regexp.escape(font_path)}"?\) format\("#{format}"\)}, response.body
+    end
+  end
+
   def test_visit_root
     visit root_path
     assert_equal 200, page.status_code
@@ -26,7 +36,15 @@ class PropshaftTest < ActionDispatch::IntegrationTest
     # Set by app/javascript/application.js once Bootstrap is imported and a tooltip shown.
     assert_selector 'body[data-bootstrap="loaded"]', visible: :all
     assert_selector '.tooltip', text: 'Bootstrap via importmaps'
-    assert_operator page.evaluate_script('document.styleSheets.length'), :>=, 1
+
+    # The icon font is preloaded and used by the stylesheet, so it must be
+    # downloaded exactly once (a URL mismatch would fetch it twice).
+    assert page.evaluate_async_script(<<~JS), 'Bootstrap Icons font did not load'
+      const done = arguments[arguments.length - 1];
+      document.fonts.load('1em bootstrap-icons').then(fonts => done(fonts.length > 0), () => done(false));
+    JS
+    font_requests = page.driver.browser.network.traffic.map { |t| t.request.url }.grep(/bootstrap-icons.*\.woff2/)
+    assert_equal 1, font_requests.size, "Expected one icon font request, got: #{font_requests.inspect}"
 
     screenshot!
   end

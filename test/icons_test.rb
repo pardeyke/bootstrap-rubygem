@@ -1,21 +1,22 @@
 require 'test_helper'
-require 'sassc'
+begin
+  # Dart Sass, used by every supported Sass engine (dartsass-sprockets via
+  # sassc-embedded, dartsass-rails, cssbundling-rails).
+  require 'sass-embedded'
+rescue LoadError
+end
 
 class IconsTest < Minitest::Test
-  include ::SassEngineSupport
-
   def setup
-    # The wrappers use @forward ... with, which requires Dart Sass.
-    skip_unless_sass_can_compile_bootstrap!
+    skip 'sass-embedded is not available' unless defined?(::Sass.compile_string)
   end
 
   def render(source)
-    SassC::Engine.new(
+    Sass.compile_string(
       source,
       load_paths: [File.join(GEM_PATH, 'assets', 'stylesheets')],
-      syntax: :scss,
       style: :expanded
-    ).render
+    ).css
   end
 
   def test_bootstrap_icons_compiles
