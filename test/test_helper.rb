@@ -25,12 +25,13 @@ browser_path = ENV['CHROMIUM_BIN'] || %w[
   /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome
 ].find { |path| File.executable?(path) }
 
-# On CI, the first page Chrome opens in a test process can take up to ~50s
-# (later ones take under a second), so allow generous Ferrum timeouts.
+# Ferrum >= 0.18 waits only `protocol_timeout` (default 5s) for internal CDP
+# calls such as opening the first page, which loaded CI runners can exceed.
 Capybara.register_driver :cuprite do |app|
   options = {
       window_size: [1280, 1024],
-      timeout: 90,
+      timeout: 30,
+      protocol_timeout: 60,
       process_timeout: 60
   }
   options[:browser_path] = browser_path if browser_path
