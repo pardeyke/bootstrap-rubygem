@@ -15,5 +15,7 @@ tmp/
 test/screenshots/
 test/dummy_rails/log/*.log
 test/dummy_rails/public/assets/
+test/dummy_propshaft/log/*.log
+test/dummy_propshaft/public/assets/
 .DS_Store
 node_modules
