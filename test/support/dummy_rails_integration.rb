@@ -25,7 +25,7 @@ module DummyRailsIntegration
 
   private
   def cleanup_dummy_rails_files
-    FileUtils.rm_rf('test/dummy_rails/tmp/cache', secure: true)
-    FileUtils.rm Dir.glob('test/dummy_rails/public/assets/{.[^\.]*,*}')
+    FileUtils.rm_rf(::Rails.root.join('tmp/cache'), secure: true)
+    FileUtils.rm_rf(::Rails.root.join('public/assets'), secure: true)
   end
 end

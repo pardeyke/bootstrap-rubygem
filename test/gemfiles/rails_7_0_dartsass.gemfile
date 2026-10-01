@@ -4,6 +4,7 @@ gem 'actionpack', '~> 7.0.4'
 gem 'activesupport', '~> 7.0.4'
 gem 'dartsass-sprockets', '~> 3.0'
 
+# json 3 removed the quirks_mode option that ActiveSupport < 8.1 passes to JSON.generate.
 gem 'json', '< 3'
 
 gemspec path: '../../'

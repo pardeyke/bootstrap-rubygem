@@ -7,7 +7,11 @@ $:.unshift(lib_path) unless $:.include?(lib_path)
 require 'rake/testtask'
 Rake::TestTask.new do |t|
   t.libs << 'test'
-  t.test_files = FileList['test/**/*_test.rb']
+  # Only one dummy Rails app can boot per process: the Propshaft one when the
+  # bundle has Propshaft (test/gemfiles/*_propshaft.gemfile), else the Sprockets one.
+  t.test_files = FileList['test/**/*_test.rb'].exclude(
+    Gem.loaded_specs.key?('propshaft') ? 'test/rails_test.rb' : 'test/propshaft_test.rb'
+  )
   t.verbose = false
   t.warning = false
 end

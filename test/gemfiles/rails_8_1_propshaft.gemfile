@@ -1,0 +1,10 @@
+source 'https://rubygems.org'
+
+# The default stack of a new Rails app: Propshaft, dartsass-rails and importmap-rails.
+gem 'actionpack', '~> 8.1.0'
+gem 'activesupport', '~> 8.1.0'
+gem 'dartsass-rails'
+gem 'importmap-rails'
+gem 'propshaft'
+
+gemspec path: '../../'
