@@ -9,8 +9,8 @@ class Updater
       # Bootstrap 6 ships ES modules only (no UMD bundle, no `window.bootstrap`
       # global). We keep the individual modules and the bundles for importmap
       # pinning; Sprockets `//= require` concatenation no longer applies.
-      read_files('js/dist', bootstrap_js_files).each do |name, content|
-        save_file("#{save_to}/#{name}", remove_source_mapping_url(content))
+      bootstrap_js_files.each do |name|
+        save_file("#{save_to}/#{name}", remove_source_mapping_url(js_dist_contents[name]))
       end
       log_processed "#{bootstrap_js_files * ' '}"
 
@@ -50,26 +50,30 @@ class Updater
       spec.sub(/\A\D*/, '')
     end
 
+    # The compiled ES modules in `js/dist`, ordered by their import graph.
+    # The graph is built from `js/dist` itself (what we ship) rather than
+    # `js/src`, which upstream migrated to TypeScript.
     def bootstrap_js_files
       @bootstrap_js_files ||= begin
-        src_files = get_paths_by_type('js/src', /\.js$/)
         imports = Deps.new
-        # Get the imports from the ES modules to order requires correctly.
-        read_files('js/src', src_files).each do |name, content|
-          file_imports = content.scan(%r{import *(?:[a-zA-Z]*|\{[a-zA-Z ,]*\}) *from '([\w/.-]+)}).flatten(1)
-            # Only follow relative imports between Bootstrap's own source files;
-            # skip npm dependencies (e.g. `vanilla-calendar-pro`, `@floating-ui/dom`).
-            .select { |f| f.start_with?('.') }
+        js_dist_contents.each do |name, content|
+          # Matches `import ... from "./x.js"`, `export ... from "./x.js"` and
+          # side-effect `import "./x.js"`, with either quote style. Only relative
+          # imports between Bootstrap's own modules are followed; npm dependencies
+          # (e.g. `vanilla-calendar-pro`, `@floating-ui/dom`) are skipped.
+          file_imports = content.scan(/\b(?:from|import)\s*["'](\.[^"']+)["']/).flatten(1)
             .map { |f| Pathname.new(name).dirname.join(f).cleanpath.to_s }
             .uniq
           imports.add name, *file_imports
         end
-        # Order by the src import graph, but only ship components that are
-        # actually present in the compiled dist (src/ may contain modules that
-        # have no standalone dist/ build).
-        dist_files = get_paths_by_type('js/dist', /\.js$/)
-        imports.tsort.select { |f| dist_files.include?(f) }
+        files = imports.tsort
+        raise 'No Bootstrap JavaScript modules found in js/dist' if files.empty?
+        files
       end
+    end
+
+    def js_dist_contents
+      @js_dist_contents ||= read_files('js/dist', get_paths_by_type('js/dist', /\.js$/))
     end
 
     def remove_source_mapping_url(content)
