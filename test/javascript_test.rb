@@ -140,9 +140,10 @@ class JavascriptTest < Minitest::Test
       '/snap/bin/chromium'
     ].compact.find { |p| File.executable?(p) }
 
-    # process_timeout matches the cuprite driver in test_helper.rb: Chrome can
-    # take well over 30s to first start on loaded CI runners.
-    opts = { headless: true, process_timeout: 60, timeout: 30 }
+    # Timeouts match the cuprite driver in test_helper.rb: on loaded CI runners,
+    # Chrome can take well over 30s to start, and more than Ferrum's default 5s
+    # protocol_timeout to open its first page.
+    opts = { headless: true, process_timeout: 60, timeout: 30, protocol_timeout: 60 }
     opts[:browser_path] = chrome if chrome # otherwise let Ferrum auto-detect (CI)
     Ferrum::Browser.new(**opts)
   end
