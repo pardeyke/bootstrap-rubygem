@@ -74,24 +74,23 @@ class Updater
       end
     end
 
-    # get sha of the branch (= the latest commit)
+    # Resolve the tracked ref (tag, branch or full commit sha) to a commit sha.
     def get_branch_sha
       @branch_sha ||= begin
         if @branch =~ /\A[0-9a-f]{40,}\z/
           @branch
         else
-          cmd = "git ls-remote #{Shellwords.escape "https://github.com/#@repo"} #@branch"
+          cmd = "git ls-remote #{Shellwords.escape "https://github.com/#@repo"} #{Shellwords.escape @branch} #{Shellwords.escape "#@branch^{}"}"
           log cmd
           result = %x[#{cmd}]
           raise 'Could not get branch sha!' unless $?.success? && !result.empty?
           # `git ls-remote <url> v6-dev` also matches suffixes like
-          # `refs/heads/mdo/v6-dev`, so pick the exact branch (or tag) ref
-          # rather than blindly taking the first line.
-          ref_of = ->(line) { line.split(/\s+/, 2)[1].to_s.strip }
-          line   = result.lines.find { |l| ref_of.call(l) == "refs/heads/#@branch" } ||
-                   result.lines.find { |l| ref_of.call(l) == "refs/tags/#@branch" } ||
-                   result.lines.first
-          line.split(/\s+/).first
+          # `refs/heads/mdo/v6-dev`, so only accept the exact tag or branch ref.
+          # An annotated tag resolves to its peeled `^{}` commit, not the tag object.
+          refs = result.lines.to_h { |l| sha, ref = l.split(/\s+/, 2); [ref.to_s.strip, sha] }
+          sha  = refs["refs/tags/#@branch^{}"] || refs["refs/tags/#@branch"] || refs["refs/heads/#@branch"]
+          raise "Could not find tag or branch #{@branch.inspect} in #@repo (got: #{refs.keys.join(', ')})" unless sha
+          sha
         end
       end
     end

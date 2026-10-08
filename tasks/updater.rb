@@ -41,10 +41,9 @@ class Updater
     puts " twbs cache: #{@cache_path}"
     puts '-' * 60
 
-    # Bootstrap 6's upstream `v6-dev` still ships stale Bootstrap 5 `dist/js`,
-    # so `skip_js: true` refreshes only the stylesheets (and version SHA),
-    # leaving the bundled JavaScript untouched until Bootstrap 6's JS is
-    # published upstream.
+    # `skip_js: true` refreshes only the stylesheets (and version SHA) and
+    # leaves the bundled JavaScript untouched, for upstream refs whose
+    # `dist/js` is stale.
     if @skip_js
       FileUtils.rm_rf(@save_to[:scss])
       FileUtils.mkdir_p(@save_to[:scss])

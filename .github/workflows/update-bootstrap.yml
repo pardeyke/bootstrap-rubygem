@@ -1,18 +1,19 @@
 name: Update Bootstrap
 
-# Daily pull of new dist files from upstream twbs/bootstrap. If the tracked
-# branch has moved, re-import the assets, sync the version, verify the
-# stylesheets still compile, and commit the result.
+# Re-import the dist files from an upstream twbs/bootstrap release tag (or
+# branch/commit). The gem tracks a fixed pre-release tag, so this no longer
+# runs on a schedule: when a new Bootstrap 6 tag is published, dispatch it
+# with that tag and bump the `default` below. If the tracked ref differs from
+# what is checked in, the assets are re-imported, the version synced, the
+# stylesheets verified to still compile, and the result committed.
 
 on:
-  schedule:
-    - cron: '0 6 * * *' # every day at 06:00 UTC
   workflow_dispatch:
     inputs:
-      branch:
-        description: Upstream twbs/bootstrap branch to track
+      ref:
+        description: Upstream twbs/bootstrap tag (or branch/commit) to import
         required: false
-        default: v6-dev
+        default: v6.0.0-alpha.1
 
 permissions:
   contents: write
@@ -26,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       BUNDLE_GEMFILE: ${{ github.workspace }}/test/gemfiles/rails_7_0_dartsass.gemfile
-      UPSTREAM_BRANCH: ${{ github.event.inputs.branch || 'v6-dev' }}
+      UPSTREAM_REF: ${{ github.event.inputs.ref || 'v6.0.0-alpha.1' }}
     steps:
       - uses: actions/checkout@v6
 
@@ -36,17 +37,17 @@ jobs:
           ruby-version: '3.4'
           bundler-cache: true
 
-      - name: Import latest Bootstrap and sync version
+      - name: Import Bootstrap and sync version
         id: update
         run: |
-          bundle exec rake update"[$UPSTREAM_BRANCH]"
-          bundle exec rake sync_version"[$UPSTREAM_BRANCH]"
+          bundle exec rake update"[$UPSTREAM_REF]"
+          bundle exec rake sync_version"[$UPSTREAM_REF]"
           # Only consider the update's own outputs, never stray CI artifacts.
           if [ -n "$(git status --porcelain -- assets lib/bootstrap/version.rb)" ]; then
             echo "changed=true" >> "$GITHUB_OUTPUT"
           else
             echo "changed=false" >> "$GITHUB_OUTPUT"
-            echo "Already up to date with twbs/bootstrap@${UPSTREAM_BRANCH}."
+            echo "Already up to date with twbs/bootstrap@${UPSTREAM_REF}."
           fi
 
       - name: Verify the stylesheets still compile
@@ -60,5 +61,5 @@ jobs:
           git config user.name  'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -A -- assets lib/bootstrap/version.rb
-          git commit -m "Auto-update Bootstrap from twbs/bootstrap@${UPSTREAM_BRANCH} (${sha})"
+          git commit -m "Update Bootstrap to twbs/bootstrap@${UPSTREAM_REF} (${sha})"
           git push

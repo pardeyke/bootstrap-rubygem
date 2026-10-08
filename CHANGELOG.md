@@ -6,13 +6,13 @@ The changelog only includes changes specific to the RubyGem.
 The Bootstrap framework changes can be found in [the Releases section of twbs/bootstrap](https://github.com/twbs/bootstrap/releases).
 Release announcement posts on [the official Bootstrap blog](http://blog.getbootstrap.com) contain summaries of the most noteworthy changes made in each release of Bootstrap.
 
-# 6.0.0.alpha1
+# 6.0.0.alpha.1
 
-First pre-release tracking Bootstrap 6 (upstream [`v6-dev`](https://github.com/twbs/bootstrap/tree/v6-dev)). **This is an alpha; expect breaking changes.**
+First pre-release tracking Bootstrap 6 (upstream [`v6.0.0-alpha.1`](https://github.com/twbs/bootstrap/releases/tag/v6.0.0-alpha.1)). **This is an alpha; expect breaking changes.**
 
 * **Sass module system.** Bootstrap 6 replaced `@import` with `@use`/`@forward`.
   Import Bootstrap with `@use "bootstrap"` and customize variables via
-  `@use "bootstrap" with (...)`. See the [v5→v6 migration guide](https://github.com/twbs/bootstrap/blob/v6-dev/skills/bootstrap-v5-v6-migration/SKILL.md).
+  `@use "bootstrap" with (...)`. See the [v5→v6 migration guide](https://github.com/twbs/bootstrap/blob/v6.0.0-alpha.1/skills/bootstrap-v5-v6-migration/SKILL.md).
 * **Dart Sass is required to compile the stylesheets.** LibSass/SassC
   (`sassc-rails`) cannot compile the module system, so `sassc-rails` is no
   longer a supported Sass engine. Use `dartsass-sprockets` (a drop-in

@@ -5,7 +5,7 @@
 For Sass versions of Bootstrap 3 and 2 see [bootstrap-sass](https://github.com/twbs/bootstrap-sass) instead.
 
 > **Bootstrap 6 (pre-release):** This is an alpha tracking the upstream
-> [`v6-dev`](https://github.com/twbs/bootstrap/tree/v6-dev) branch.
+> [`v6.0.0-alpha.1`](https://github.com/twbs/bootstrap/releases/tag/v6.0.0-alpha.1) release.
 > Bootstrap 6 moved its Sass to the [module system](https://sass-lang.com/documentation/at-rules/use)
 > (`@use`/`@forward`), so its stylesheets require a **Dart Sass** engine to
 > compile — LibSass/SassC (`sassc-rails`) cannot compile them and is no longer
