@@ -8,7 +8,7 @@ Release announcement posts on [the official Bootstrap blog](http://blog.getboots
 
 # Unreleased
 
-* Bundle [Bootstrap Icons](https://icons.getbootstrap.com/) v1.13.1 (Sass + web fonts), opt-in via
+* Bundle [Bootstrap Icons](https://icons.getbootstrap.com/) v1.13.2 (Sass + web fonts), opt-in via
   `@use "bootstrap-icons-sprockets"` (Sprockets), `@use "bootstrap-icons-propshaft"`
   (Propshaft), or `@use "bootstrap-icons"`.
   [#276](https://github.com/twbs/bootstrap-rubygem/issues/276)
