@@ -6,6 +6,12 @@ The changelog only includes changes specific to the RubyGem.
 The Bootstrap framework changes can be found in [the Releases section of twbs/bootstrap](https://github.com/twbs/bootstrap/releases).
 Release announcement posts on [the official Bootstrap blog](http://blog.getbootstrap.com) contain summaries of the most noteworthy changes made in each release of Bootstrap.
 
+# 6.0.0.alpha.2
+
+Tracks upstream [`v6.0.0-alpha.2`](https://github.com/twbs/bootstrap/releases/tag/v6.0.0-alpha.2). **This is an alpha; expect breaking changes.**
+
+* The vendored `floating-ui.js` is now `@floating-ui/dom` 1.8.0.
+
 # 6.0.0.alpha.1
 
 First pre-release tracking Bootstrap 6 (upstream [`v6.0.0-alpha.1`](https://github.com/twbs/bootstrap/releases/tag/v6.0.0-alpha.1)). **This is an alpha; expect breaking changes.**
