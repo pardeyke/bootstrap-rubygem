@@ -5,7 +5,7 @@
 For Sass versions of Bootstrap 3 and 2 see [bootstrap-sass](https://github.com/twbs/bootstrap-sass) instead.
 
 > **Bootstrap 6 (pre-release):** This is an alpha tracking the upstream
-> [`v6.0.0-alpha.1`](https://github.com/twbs/bootstrap/releases/tag/v6.0.0-alpha.1) release.
+> [`v6.0.0-alpha.2`](https://github.com/twbs/bootstrap/releases/tag/v6.0.0-alpha.2) release.
 > Bootstrap 6 moved its Sass to the [module system](https://sass-lang.com/documentation/at-rules/use)
 > (`@use`/`@forward`), so its stylesheets require a **Dart Sass** engine to
 > compile — LibSass/SassC (`sassc-rails`) cannot compile them and is no longer
@@ -30,7 +30,7 @@ Please see the appropriate guide for your environment of choice:
 Add `bootstrap` to your Gemfile:
 
 ```ruby
-gem 'bootstrap', '~> 6.0.0.alpha1'
+gem 'bootstrap', '~> 6.0.0.alpha2'
 ```
 
 This gem requires a Sass engine, so make sure you have **one** of these gems in your Gemfile.
